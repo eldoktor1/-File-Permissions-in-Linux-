@@ -9,7 +9,7 @@ This project demonstrates how I managed file and directory permissions in a real
 
 To begin, I used the `ls -la` command to inspect the current file and directory permissions within the `projects` directory.
 
-![ls -la output](https://raw.githubusercontent.com/eldoktor1/-File-Permissions-in-Linux-/main/images/permissions_page_1_img_1.png)
+![ls -la output](https://raw.githubusercontent.com/eldoktor1/-File-Permissions-in-Linux-/main/file_permissions_images/permissions_page_1_img_1.png)
 
 This output showed:
 - One directory: `drafts`
@@ -41,7 +41,7 @@ For example, `-rw-rw-r--` means:
 
 I used `chmod` to remove write access for "others".
 
-![chmod on project_k.txt](https://raw.githubusercontent.com/eldoktor1/-File-Permissions-in-Linux-/main/images/permissions_page_2_img_1.png)
+![chmod on project_k.txt](https://raw.githubusercontent.com/eldoktor1/-File-Permissions-in-Linux-/main/file_permissions_images/permissions_page_2_img_1.png)
 
 The `chmod o-w project_k.txt` command removed write permissions from others. I then verified it using `ls -la`.
 
@@ -51,7 +51,7 @@ The `chmod o-w project_k.txt` command removed write permissions from others. I t
 
 To prevent any writes to `.project_x.txt`, while allowing read access for user and group:
 
-![chmod on hidden file](https://raw.githubusercontent.com/eldoktor1/-File-Permissions-in-Linux-/main/images/permissions_page_3_img_1.png)
+![chmod on hidden file](https://raw.githubusercontent.com/eldoktor1/-File-Permissions-in-Linux-/main/file_permissions_images/permissions_page_3_img_1.png)
 
 Commands used:
 ```bash
