@@ -1,60 +1,79 @@
 # File Permissions in Linux
 
 **Project Description**  
-This project demonstrates how I managed file and directory permissions in a real-world Linux environment to meet organizational security standards. The research department needed to control access on specific files and folders within the `projects` directory. I reviewed and modified these permissions using standard Linux commands.
+This project demonstrates how I managed Linux file and directory permissions
+to align with my organization’s security requirements. I audited and modified
+access for specific users and groups to ensure appropriate control over
+sensitive data in the `projects/` directory.
 
 ---
 
-### 🔍 Check File and Directory Details
+### 📁 Step 1: Audit Existing File Permissions
 
-To begin, I used the `ls -la` command to inspect the current file and directory permissions within the `projects` directory.
+Using `ls -la`, I inspected the current permissions for files and directories
+in the `projects/` folder.
 
 ![ls -la output](https://raw.githubusercontent.com/eldoktor1/-File-Permissions-in-Linux-/main/file_permissions_images/permissions_page_1_img_1.png)
 
-This output showed:
-- One directory: `drafts`
-- One hidden file: `.project_x.txt`
-- Five project files
-
-The 10-character string in the first column (e.g., `-rw-rw-r--`) represents the type and permissions of each file or directory.
+> Observation:
+> - `.project_x.txt` has write access for the group — too permissive.
+> - `drafts/` is a directory with group execute access.
+> - `project_k.txt` allows write access to others.
 
 ---
 
-### 🔡 Interpreting Permission Strings
+### 🔧 Step 2: Remove Write Access for Others (`project_k.txt`)
 
-Permissions are broken down as follows:
-- First character: File type (`d` for directory, `-` for regular file)
-- Characters 2–4: User permissions (read/write/execute)
-- Characters 5–7: Group permissions
-- Characters 8–10: Others (all other users)
+To comply with policy, I removed `write` access for others on `project_k.txt`.
 
-For example, `-rw-rw-r--` means:
-- It's a regular file
-- The user and group can read/write
-- Others can only read
+![chmod project_k.txt](https://raw.githubusercontent.com/eldoktor1/-File-Permissions-in-Linux-/main/file_permissions_images/permissions_page_2_img_1.png)
 
----
+    chmod o-w project_k.txt
+    ls -la
 
-### 🛠️ Changing File Permissions
-
-#### Example: Remove Write Access for Others on `project_k.txt`
-
-I used `chmod` to remove write access for "others".
-
-![chmod on project_k.txt](https://raw.githubusercontent.com/eldoktor1/-File-Permissions-in-Linux-/main/file_permissions_images/permissions_page_2_img_1.png)
-
-The `chmod o-w project_k.txt` command removed write permissions from others. I then verified it using `ls -la`.
+> Result:  
+> File now shows `-rw-rw-r--`, removing write access from "others".
 
 ---
 
-#### Example: Secure a Hidden File `.project_x.txt`
+### 🔐 Step 3: Secure Hidden File `.project_x.txt`
 
-To prevent any writes to `.project_x.txt`, while allowing read access for user and group:
+The file `.project_x.txt` should not be writable. I removed write permissions
+from both the user and group, but retained group read access.
 
 ![chmod on hidden file](https://raw.githubusercontent.com/eldoktor1/-File-Permissions-in-Linux-/main/file_permissions_images/permissions_page_3_img_1.png)
 
-Commands used:
-```bash
-chmod u-w .project_x.txt
-chmod g-w .project_x.txt
-chmod g+r .project_x.txt
+    chmod u-w .project_x.txt
+    chmod g-w .project_x.txt
+    chmod g+r .project_x.txt
+
+> Result:  
+> File now has `-r--r-----`, ensuring no one can write to it.
+
+---
+
+### 🚫 Step 4: Restrict Access to the `drafts/` Directory
+
+Only `researcher2` should have execute access to the `drafts/` directory.
+I removed group execute rights to prevent traversal.
+
+![chmod on drafts](https://raw.githubusercontent.com/eldoktor1/-File-Permissions-in-Linux-/main/file_permissions_images/permissions_page_4_img_1.png)
+
+    chmod g-x drafts
+
+> Result:  
+> `drafts/` now has `drwx------`, blocking group access.
+
+---
+
+### ✅ Summary
+
+- Audited permissions using `ls -la`
+- Used `chmod` to enforce security best practices
+- Removed write access from group/others
+- Secured sensitive files and directories appropriately
+
+---
+
+**Author:** Mina Abskhron  
+**GitHub:** [@eldoktor1](https://github.com/eldoktor1)
