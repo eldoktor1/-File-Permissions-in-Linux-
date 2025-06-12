@@ -1,43 +1,60 @@
-# File Permissions in Linux 🐧🔒
+# File Permissions in Linux
 
-This repository contains information and examples related to file permissions in Linux. The goal of this project is to demonstrate how to review and modify file permissions to ensure security and access control within a specific directory.
+**Project Description**  
+This project demonstrates how I managed file and directory permissions in a real-world Linux environment to meet organizational security standards. The research department needed to control access on specific files and folders within the `projects` directory. I reviewed and modified these permissions using standard Linux commands.
 
-## Summary
-In this project, we focused on the projects directory and performed the following steps:
+---
 
-1. Reviewing File and Directory Information: We used the `ls -la` command to display a detailed listing of file contents, including hidden files, within the projects directory. We analyzed the permissions string to determine the access rights for users, groups, and others.
+### 🔍 Check File and Directory Details
 
-2. Changing File Permissions: We utilized the `chmod` command to modify file permissions. For example, we removed write access for "other" on a file named `project_k.txt` using the command `chmod o-w project_k.txt`.
+To begin, I used the `ls -la` command to inspect the current file and directory permissions within the `projects` directory.
 
-3. Changing Permissions on Hidden Files: We archived a hidden file named `.project_x.txt` and adjusted its permissions. We removed write permissions for the user and group, and added read permissions for the group using commands like `chmod u-w,g-w,g+r .project_x.txt`.
+![ls -la output](https://raw.githubusercontent.com/eldoktor1/-File-Permissions-in-Linux-/main/images/permissions_page_1_img_1.png)
 
-4. Changing Directory Permissions: We modified the permissions for the `drafts` directory to restrict access. We removed execute permissions for groups using the `chmod` command, ensuring that only the `researcher2` user had access.
+This output showed:
+- One directory: `drafts`
+- One hidden file: `.project_x.txt`
+- Five project files
 
-These steps helped ensure that only authorized individuals had the appropriate level of access to files and directories in the projects directory, contributing to a secure system.
+The 10-character string in the first column (e.g., `-rw-rw-r--`) represents the type and permissions of each file or directory.
 
-## Getting Started
-To get started with this project, follow these steps:
+---
 
-1. Clone this repository to your local machine using the following command:
-```
-git clone https://github.com/your-username/file-permissions-linux.git
-```
+### 🔡 Interpreting Permission Strings
 
-2. Navigate to the repository directory:
-```
-cd file-permissions-linux
-```
+Permissions are broken down as follows:
+- First character: File type (`d` for directory, `-` for regular file)
+- Characters 2–4: User permissions (read/write/execute)
+- Characters 5–7: Group permissions
+- Characters 8–10: Others (all other users)
 
-3. Explore the files and directories within the projects directory to understand their current permissions.
+For example, `-rw-rw-r--` means:
+- It's a regular file
+- The user and group can read/write
+- Others can only read
 
-4. Review the documentation and examples provided in this repository to learn more about file permissions in Linux.
+---
 
-5. Feel free to modify the files and directories' permissions as needed and observe the changes.
+### 🛠️ Changing File Permissions
 
-## Contributing
-Contributions are welcome! If you have any suggestions, bug fixes, or improvements, please open an issue or submit a pull request. Make sure to follow the repository's code of conduct.
+#### Example: Remove Write Access for Others on `project_k.txt`
 
-## License
-This project is licensed under the MIT License.
+I used `chmod` to remove write access for "others".
 
-You can use the above content as the initial README.md file for your repository. Follow the GitHub documentation to create a new repository and push the code to it. Remember to replace "your-username" in the clone command with your actual GitHub username.
+![chmod on project_k.txt](https://raw.githubusercontent.com/eldoktor1/-File-Permissions-in-Linux-/main/images/permissions_page_2_img_1.png)
+
+The `chmod o-w project_k.txt` command removed write permissions from others. I then verified it using `ls -la`.
+
+---
+
+#### Example: Secure a Hidden File `.project_x.txt`
+
+To prevent any writes to `.project_x.txt`, while allowing read access for user and group:
+
+![chmod on hidden file](https://raw.githubusercontent.com/eldoktor1/-File-Permissions-in-Linux-/main/images/permissions_page_3_img_1.png)
+
+Commands used:
+```bash
+chmod u-w .project_x.txt
+chmod g-w .project_x.txt
+chmod g+r .project_x.txt
